@@ -1,0 +1,43 @@
+services:
+  tiled:
+    # see the file ./tiled/deploy/config.yml for detailed configuration of tiled
+    image: ghcr.io/bluesky/tiled:v0.1.0a118
+    container_name: tiled-server
+    command: ["tiled", "serve", "config", "/deploy/config.yml"]
+    ports:
+      - "127.0.0.1:8000:8000"
+    env_file:
+      - .env
+    environment:
+      - TILED_DB_USER=${TILED_DB_USER}
+      - TILED_DB_PW=${TILED_DB_PW}
+      - TILED_DB_NAME=${TILED_DB_NAME}
+      - TILED_DB_SERVER=tiled_db
+      - TILED_SINGLE_USER_API_KEY=TILED_KEY
+    volumes:
+      - ./tiled/deploy:/deploy
+      - ${READ_DIR}
+      - ${WRITE_DIR}  # Direct mount for data files
+    depends_on:
+      - tiled_db
+    networks:
+      mle_net:
+
+
+  tiled_db:
+    image: postgres:14.5-alpine
+    container_name: tiled-db
+    environment:
+      - POSTGRES_USER=${TILED_DB_USER}
+      - POSTGRES_PASSWORD=${TILED_DB_PW}
+      - POSTGRES_DB=${TILED_DB_NAME}
+    volumes:
+      - ./data/tiled_db:/var/lib/postgresql/data:rw
+      - ${READ_DIR}
+    restart: unless-stopped
+    networks:
+      mle_net:
+
+networks:
+  mle_net:
+    driver: bridge

@@ -1,0 +1,19 @@
+authentication:
+  single_user_api_key: ${TILED_SINGLE_USER_API_KEY}
+  allow_anonymous_access: true
+uvicorn:
+  host: 0.0.0.0
+  port: 8000
+allow_origins:
+  - http://localhost
+trees:
+  - path: /
+    tree: catalog
+    args:
+      uri: "sqlite:////home/user/tiledData/tiled/deploy/catalog.db"
+      writable_storage:
+        - "deploy/data"               
+        - "sqlite:////home/user/tiledData/tiled/deploy/tabular.db"       
+      readable_storage:
+        - "/home/user/tiledData/tiled/deploy/data"
+      init_if_not_exists: true
