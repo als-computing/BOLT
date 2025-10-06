@@ -5,7 +5,7 @@ BOLT is described in detail here: https://indico.jacow.org/event/86/contribution
 ## Hardware
 
 All information to replicate the setup is in this folder (`BOLT/hardware`). Overview:
-![plot](./hardware/CAD drawings/CAD_iso_overview.png)
+![plot](./hardware/CAD%20drawings/CAD_iso_overview.png)
 <br>
 - `CAD drawings` contains step files of all custom(ized) items (shown in the image above, step files created using https://www.freecad.org/, 3D print files created using  https://github.com/prusa3d/PrusaSlicer)
 - `bill of materials` contains all commercially available prodcuts (with links)<br>
